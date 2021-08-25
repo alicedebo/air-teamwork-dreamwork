@@ -1,0 +1,26 @@
+{
+  "name": "air-teamwork-dreamwork",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alicedebo/air-teamwork-dreamwork.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alicedebo/air-teamwork-dreamwork/issues"
+  },
+  "homepage": "https://github.com/alicedebo/air-teamwork-dreamwork#readme",
+  "dependencies": {
+    "inquirer": "^8.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
