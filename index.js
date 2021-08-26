@@ -55,7 +55,11 @@ function addManager() {
                 return "Please enter a valid office number.";
             }
         },
-    ]); //add .then to push answers to manager and addTeam()
+        //add .then to push answers to manager and addTeam()
+    ]).then(answers => {
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+        addTeam();
+    }); 
 }
 
 function addTeam() {
@@ -119,7 +123,10 @@ function addEngineer() {
                 return "Please enter the engineer's GitHub username.";
             }
         },
-    ]); //write .then to push answers to engineer. add addTeam() function for menu to popup
+    ]) .then(answers => {
+        const engineer = new Eanager(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        addTeam();
+    }); //write .then to push answers to engineer. add addTeam() function for menu to popup
 }
 
 function addIntern() {
@@ -168,7 +175,16 @@ function addIntern() {
                 return "Please enter a proper school.";
             }
         },
-    ]);//write .then to push answers to intern. add addTeam() function for menu to popup
+    ]) .then(answers => {
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        addTeam();
+    });//write .then to push answers to intern. add addTeam() function for menu to popup
+}
+// Tanni: is it going to be a template literal like in the mini project/homework?
+//create html in js? (appendchild) 
+//Write function to generate HTML.
+function generateHTML() {
+    
 }
 
-//Write function to generate HTML.
+addManager();
