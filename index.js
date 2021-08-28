@@ -3,10 +3,20 @@ const fs = require('fs');
 const path = require('path');
 const jest = require('jest');
 
-const employee = require('./lib/employee');
-const manager = require('./lib/manager');
-const engineer = require('./lib/engineer');
-const intern = require('./lib/intern');
+const Employee = require('./lib/employee');
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+
+const DIST_DIR = path.resolve(__dirname, 'dist');
+const outputPath = path.join(DIST_DIR, 'index.html');
+const render = require('./src/page-template.js');
+// const Engineer = require('./lib/engineer');
+
+const teamArr = [];
+const idArr = [];
+
+function initApp() {
 
 function addManager() {
     console.log("Start building your team profile");
@@ -58,9 +68,12 @@ function addManager() {
         //add .then to push answers to manager and addTeam()
     ]).then(answers => {
         const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+        teamArr.push(manager);
+        idArr.push(answers.managerId);
         addTeam();
-    }); 
-}
+        }); 
+    }
+
 
 function addTeam() {
     inquirer.prompt([
@@ -70,11 +83,22 @@ function addTeam() {
             message: "What kind of team member would you like to add next?",
             choices: [
                 "Engineer",
-                "Intern, or",
+                "Intern",
                 "End application"
             ]
         }
-    ]); //add function to add or end and generate HTML
+    ]).then(userChoice => {
+        switch (userChoice.memberChoice) {
+            case "Engineer":
+                addEngineer();
+                break;
+            case "Intern":
+                addIntern();
+                break;
+            default:
+                generateHTML()    ;
+        }
+    }); //add function to add or end and generate HTML
 }
 
 function addEngineer() {
@@ -124,7 +148,9 @@ function addEngineer() {
             }
         },
     ]) .then(answers => {
-        const engineer = new Eanager(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamArr.push(engineer);
+        idArr.push(answers.engineerId);
         addTeam();
     }); //write .then to push answers to engineer. add addTeam() function for menu to popup
 }
@@ -177,14 +203,21 @@ function addIntern() {
         },
     ]) .then(answers => {
         const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        teamArr.push(intern);
+        idArr.push(answers.internId);
         addTeam();
     });//write .then to push answers to intern. add addTeam() function for menu to popup
 }
-// Tanni: is it going to be a template literal like in the mini project/homework?
-//create html in js? (appendchild) 
-//Write function to generate HTML.
+
 function generateHTML() {
-    
+    if (!fs.existsSync(DIST_DIR)) {
+        fs.mkdirSync(DIST_DIR);
+    }
+    console.log("Generating Team Profile.... ");
+    fs.writeFileSync(outputPath, render(teamArr), "utf-8");
 }
 
 addManager();
+}
+
+initApp();
