@@ -11,7 +11,6 @@ const Intern = require('./lib/intern');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 const outputPath = path.join(DIST_DIR, 'index.html');
 const render = require('./src/page-template.js');
-// const Engineer = require('./lib/engineer');
 
 const teamArr = [];
 const idArr = [];
@@ -65,7 +64,6 @@ function addManager() {
                 return "Please enter a valid office number.";
             }
         },
-        //add .then to push answers to manager and addTeam()
     ]).then(answers => {
         const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
         teamArr.push(manager);
@@ -98,7 +96,7 @@ function addTeam() {
             default:
                 generateHTML()    ;
         }
-    }); //add function to add or end and generate HTML
+    });
 }
 
 function addEngineer() {
@@ -152,7 +150,7 @@ function addEngineer() {
         teamArr.push(engineer);
         idArr.push(answers.engineerId);
         addTeam();
-    }); //write .then to push answers to engineer. add addTeam() function for menu to popup
+    });
 }
 
 function addIntern() {
@@ -206,7 +204,7 @@ function addIntern() {
         teamArr.push(intern);
         idArr.push(answers.internId);
         addTeam();
-    });//write .then to push answers to intern. add addTeam() function for menu to popup
+    });
 }
 
 function generateHTML() {
